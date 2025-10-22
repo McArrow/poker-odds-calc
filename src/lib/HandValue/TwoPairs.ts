@@ -6,6 +6,23 @@ export default function hasTwoPairs(game: Game, cards: Array<Card>, suits: { [ke
 
   let pairs = num_groups.filter(g => g.length === 2);
 
+  if (game.isOmaha() || game.isOmaha5Cards() || game.isOmaha6Cards()) {
+    for (const triple_group of num_groups.filter(g => g.length === 3)) {
+      pairs.push([triple_group[0], triple_group[1]]);
+      pairs.push([triple_group[1], triple_group[2]]);
+      pairs.push([triple_group[0], triple_group[2]]);
+    }
+
+    for (const triple_group of num_groups.filter(g => g.length === 4)) {
+      pairs.push([triple_group[0], triple_group[1]]);
+      pairs.push([triple_group[1], triple_group[2]]);
+      pairs.push([triple_group[2], triple_group[3]]);
+      pairs.push([triple_group[0], triple_group[2]]);
+      pairs.push([triple_group[1], triple_group[3]]);
+      pairs.push([triple_group[0], triple_group[3]]);
+    }
+  }
+
   if (pairs.length >= 2) {
 
     if (pairs.length > 2) {
