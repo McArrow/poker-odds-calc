@@ -394,4 +394,22 @@ describe("Texas Omaha", function () {
     done();
   }).timeout(3e3);
 
+  it('Bug 2c515b102201708b388be567aa4f259daa23660c', (done) => {
+    const result = new Table()
+        .addPlayer(['Ts', '7s', '8c', '2h'])
+        .addPlayer(['Ac', 'As', 'Ad', 'Kh'])
+        .boardAction((board: Board) => {
+          board
+              .setFlop(['Tc', '7d', '3h'])
+              .setTurn('5d')
+        })
+        .calculate();
+    assert.equal(result.getPlayers()[0].getWinsPercentage(), 82.50);
+    assert.equal(result.getPlayers()[1].getWinsPercentage(), 17.50);
+    assert.equal(result.getPlayers()[0].getTiesPercentage(), 0);
+    assert.equal(result.getPlayers()[1].getTiesPercentage(), 0);
+
+    done();
+  });
+
 });
